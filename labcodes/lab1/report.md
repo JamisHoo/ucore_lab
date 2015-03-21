@@ -60,3 +60,28 @@ dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc
 ```
 由sign.c中可以看出，引导扇区大小为512字节，以0x55AA结尾。
 ```
+
+2.1
+```
+通过改写Makefile文件在调用qemu时增加-d in_asm -D q.log参数，
+便可以将汇编指令保存在q.log中。
+```
+
+2.2
+```
+运行make debug后，在gdb中输入b *0x7c00设置断点，
+运行c继续执行，停止后输出x /i $pc查看当前指令。
+可以看到当前指令为cli。
+```
+
+2.3
+```
+一致
+```
+
+2.4
+```
+已测试
+```
+
+
