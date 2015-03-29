@@ -67,6 +67,7 @@ default_init(void) {
 
 static void
 default_init_memmap(struct Page *base, size_t n) {
+    /* modified in lab2 by Jamis Hoo */
     assert(n > 0);
     struct Page *p = base;
     for (; p != base + n; p ++) {
@@ -80,11 +81,13 @@ default_init_memmap(struct Page *base, size_t n) {
     nr_free += n;
     //first block
     base->property = n;
+    /* modified in lab2 by Jamis Hoo */
 
 }
 
 static struct Page *
 default_alloc_pages(size_t n) {
+    /* modified in lab2 by Jamis Hoo */
     assert(n > 0);
     if (n > nr_free) {
         return NULL;
@@ -114,11 +117,13 @@ default_alloc_pages(size_t n) {
       }
     }
     return NULL;
+    /* modified in lab2 by Jamis Hoo */
 
 }
 
 static void
 default_free_pages(struct Page *base, size_t n) {
+    /* modified in lab2 by Jamis Hoo */
     assert(n > 0);
     assert(PageReserved(base));
 
@@ -161,6 +166,7 @@ default_free_pages(struct Page *base, size_t n) {
 
     nr_free += n;
     return ;
+    /* modified in lab2 by Jamis Hoo */
 
 }
 
