@@ -48,6 +48,19 @@ idt_init(void) {
       *     You don't know the meaning of this instruction? just google it! and check the libs/x86.h to know more.
       *     Notice: the argument of lidt is idt_pd. try to find it!
       */
+    /* added in lab1 by Jamis Hoo */
+    extern uintptr_t __vectors[];
+    int i;
+    for (i = 0; i < sizeof(idt) / sizeof(struct gatedesc); i ++) {
+        SETGATE(idt[i], 0, GD_KTEXT, __vectors[i], DPL_KERNEL);
+    }
+	// set for switch from user to kernel
+    SETGATE(idt[T_SYSCALL], 1, GD_KTEXT, __vectors[T_SYSCALL], DPL_USER);
+	// load the IDT
+    lidt(&idt_pd);
+    /* added in lab1 by Jamis Hoo */
+
+
 }
 
 static const char *
