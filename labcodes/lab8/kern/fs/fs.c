@@ -97,3 +97,25 @@ dup_files(struct files_struct *to, struct files_struct *from) {
     return 0;
 }
 
+int
+dup_fs(struct files_struct *to, struct files_struct *from) {
+//    cprintf("[dup_fs]\n");
+    assert(to != NULL && from != NULL);
+    assert(files_count(to) == 0 && files_count(from) > 0);
+    if ((to->pwd = from->pwd) != NULL) {
+        vop_ref_inc(to->pwd);
+    }
+    int i;
+    struct file *to_file = to->fd_array, *from_file = from->fd_array;
+    for (i = 0; i < FILES_STRUCT_NENTRY; i ++, to_file ++, from_file ++) {
+        if (from_file->status == FD_OPENED) {
+            /* alloc_fd first */
+            to_file->status = FD_INIT;
+            fd_array_dup(to_file, from_file);
+        }
+    }
+    return 0;
+}
+
+
+
